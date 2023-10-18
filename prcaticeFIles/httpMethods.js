@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const url = require("url");
 
-const server = http.createServer((req, res) => {
+function myHandler(req, res) {
     if (req.url === '/favicon.ico') return res.end();
     const log = `${Date.now()}: ${req.method} ${req.url} Received\n`
     const myUrl = url.parse(req.url, true);
@@ -24,7 +24,10 @@ const server = http.createServer((req, res) => {
         }
     });
     console.log();
-});
+};
+
+
+const server = http.createServer(myHandler);
 
 const PORT = 9000;
 
