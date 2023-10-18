@@ -1,0 +1,7 @@
+REST API - JSON
+-------------------
+GET/users
+GET/users/:id
+POST/users
+PATCH/users/:id or PUT/users/:id
+DELETE/users
