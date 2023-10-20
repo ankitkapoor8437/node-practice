@@ -7,6 +7,14 @@ const { error } = require("console");
 const app = express();
 const PORT = 9000;
 
+// middle ware example
+app.use((req, res, next)=>{
+    console.log("working");
+    return res.json({message: "Working"})
+    next();
+})
+
+
 app.use(express.json())
 // SSR
 app.get('/users', (req, res) => {
