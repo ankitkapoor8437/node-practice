@@ -1,5 +1,7 @@
 
 const User = require('../models/userModel');
+const { v4: uuidv4 } = require("uuid");
+const {setUser, getUser} = require('../service/auth')
 
 const getUsers = async (req, res) => {
     try {
@@ -23,19 +25,17 @@ const getUserById = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    const { first_name, last_name, email, job_title, gender } = req.body;;
+    const { name, email, password } = req.body;;
 
-    if (!first_name || !last_name || !gender || !email || !job_title) {
+    if (!name || !email || !password) {
         return res.status(400).json({ message: "All fields are required!" });
     }
 
     try {
         const createUser = await User.create({
-            first_name,
-            last_name,
+            name,
             email,
-            job_title,
-            gender
+            password
         });
 
         return res.status(201).json(createUser);
@@ -47,15 +47,14 @@ const createUser = async (req, res) => {
 
 const updateUserById = async (req, res) => {
     const id = req.params.id;
-    const { first_name, last_name, email, gender, job_title } = req.body;
+    const { name, email, password } = req.body;
 
     try {
         const dataToUpdate = req.body;
         await User.findByIdAndUpdate(id, {
-            first_name,
-            last_name,
-            gender,
-            job_title
+            name,
+            email,
+            password
         });
 
         if (!dataToUpdate) {
@@ -83,6 +82,49 @@ const deleteUserById = async (req, res) => {
     }
 };
 
+// Authentication
+
+// SignUp
+const handleUserSignUp = async (req, res) => {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required!" });
+    }
+
+    try {
+        const createUser = await User.create({
+            name,
+            email,
+            password
+        });
+
+        return res.status(201).json(createUser);
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    };
+}
+
+// Login
+const handleUserLogIn = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email, password });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid Username or password" });
+        }
+        const sessionId = uuidv4();
+        setUser(sessionId, user);
+        res.cookie("uid", sessionId);
+        return res.status(200).json({ message: sessionId });
+    } catch (error) {
+        console.error("Error creating user:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    };
+}
+
+
 
 module.exports = {
     getUsers,
@@ -90,4 +132,7 @@ module.exports = {
     getUserById,
     updateUserById,
     deleteUserById,
+
+    handleUserSignUp,
+    handleUserLogIn
 }

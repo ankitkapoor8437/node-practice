@@ -1,6 +1,8 @@
 const express = require("express");
 const userRoutes = require('./routes/userRoutes');
 const {mongoConnectDb} = require('./connectionFile/connection')
+const cookieParser = require("cookie-parser");
+const {restrictToLoggedInUserOnly} = require('./middlewares/auth')
 require('dotenv').config();
 
 // Environment Variables 
@@ -9,13 +11,17 @@ const PORT = process.env.PORT;
 
 // App is a handler function
 const app = express();
+
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
+
 
 // DB CONNECTION
 mongoConnectDb(databaseUrl);
 
 // User Route
+app.use('/data', restrictToLoggedInUserOnly, userRoutes);
 app.use('/users', userRoutes);
 
 app.listen(PORT, () => {

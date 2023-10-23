@@ -5,15 +5,19 @@ const {
     createUser,
     getUserById,
     updateUserById,
-    deleteUserById } = require('../controllers/userController')
+    deleteUserById,
+    handleUserSignUp,
+    handleUserLogIn
+ } = require('../controllers/userController')
 
 // ROUTES
 
 // GET
-router.get('/api', getUsers);
+router.get('/api/signup', getUsers);
 
 // POST
-router.post('/api', createUser);
+router.post('/api/signup', handleUserSignUp);
+router.post('/api/login', handleUserLogIn);
 
 // GET BY ID, PUT, DELETE
 router.route("/api/:id").get(getUserById)
