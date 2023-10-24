@@ -25,9 +25,10 @@ const getProjectById = async (req, res) => {
     }
 }
 
+// Create Project Data
 const createProject = async (req, res) => {
     const { projectName, projectUrl, projectDesc } = req.body;;
-
+    
     // if (!name || !email || !password) {
     //     return res.status(400).json({ message: "All fields are required!" });
     // }
@@ -46,9 +47,11 @@ const createProject = async (req, res) => {
     }
 };
 
+// Update Project Data
 const updateProjectById = async (req, res) => {
     const id = req.params.id;
-    const { projectName,
+    const {
+        projectName,
         projectUrl,
         projectDesc } = req.body;
 
@@ -71,6 +74,7 @@ const updateProjectById = async (req, res) => {
     }
 };
 
+// Delete Project Data
 const deleteProjectById = async (req, res) => {
     const id = req.params.id;
     try {

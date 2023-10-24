@@ -19,7 +19,7 @@ router.get('/api/project', getProjects);
 router.post('/api/project', createProject);
 
 // GET BY ID, PUT, DELETE
-router.route('/api/:id').get(getProjectById)
+router.route('/api/project/:id').get(getProjectById)
     .patch(updateProjectById)
     .delete(deleteProjectById);
 
