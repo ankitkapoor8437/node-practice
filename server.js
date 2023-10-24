@@ -1,5 +1,6 @@
 const express = require("express");
 const userRoutes = require('./routes/userRoutes');
+const projectData = require('./routes/projectRoutes');
 const {mongoConnectDb} = require('./connectionFile/connection')
 const cookieParser = require("cookie-parser");
 const {restrictToLoggedInUserOnly} = require('./middlewares/auth')
@@ -21,9 +22,11 @@ app.use(cookieParser());
 mongoConnectDb(databaseUrl);
 
 // User Route
-app.use('/data', restrictToLoggedInUserOnly, userRoutes);
+app.use('/data', projectData);
 app.use('/users', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`);
+    console.log(`...Requesting for DB Connection`);
+
 });
