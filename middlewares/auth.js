@@ -11,7 +11,7 @@ const restrictToLoggedInUserOnly = (req, res, next) => {
     if (!user) {
         return res.status(400).redirect("/api/login");
     }
-
+     
     req.user = user;
     next();
 };

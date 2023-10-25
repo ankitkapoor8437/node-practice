@@ -1,5 +1,7 @@
 const Project = require('../models/projectModel');
 
+
+
 // Get Projects
 const getProjects = async (req, res) => {
     try {
@@ -39,7 +41,6 @@ const createProject = async (req, res) => {
             projectUrl,
             projectDesc
         });
-
         return res.status(201).json(projectData);
     } catch (error) {
         console.error("Error creating user:", error);
@@ -62,7 +63,6 @@ const updateProjectById = async (req, res) => {
             projectUrl,
             projectDesc
         });
-
         if (!dataToUpdate) {
             return res.status(404).json({ message: "Project data not found" });
         }

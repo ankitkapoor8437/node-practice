@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 const {
     getProjects,
     getProjectById,
@@ -9,9 +10,7 @@ const {
     deleteProjectById } = require('../controllers/projectController');
 
 
-
 // Routes for Project
-
 // GET
 router.get('/api/project', getProjects);
 
