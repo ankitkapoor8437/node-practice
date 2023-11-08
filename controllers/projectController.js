@@ -2,6 +2,7 @@ const Project = require('../models/projectModel');
 
 
 
+
 // Get Projects
 const getProjects = async (req, res) => {
     try {
@@ -29,21 +30,18 @@ const getProjectById = async (req, res) => {
 
 // Create Project Data
 const createProject = async (req, res) => {
-    const { projectName, projectUrl, projectDesc } = req.body;;
-    
-    // if (!name || !email || !password) {
-    //     return res.status(400).json({ message: "All fields are required!" });
-    // }
+    const { projectName, projectUrl, projectDesc } = req.body;
 
     try {
         const projectData = await Project.create({
             projectName,
             projectUrl,
-            projectDesc
+            projectDesc,
+            projectImageURL:`/uploads/${req.file.filename}`
         });
         return res.status(201).json(projectData);
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error creating project data:", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };

@@ -9,8 +9,11 @@ const projectSchema = new mongoose.Schema(
         projectUrl: {
             type: String,
         },
-        projectDesc:{
-            type:String,
+        projectDesc: {
+            type: String,
+        },
+        projectImageURL: {
+            type: String,
         }
     },
     { timestamps: true }
